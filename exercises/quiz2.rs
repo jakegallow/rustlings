@@ -31,19 +31,18 @@ mod my_module {
     use super::Command;
 
     pub fn transformer(input: &[(&str, Command)]) -> Vec<String> {
-        input.iter().map(|(inp, cmd)| {
-            match cmd {
+        input
+            .iter()
+            .map(|(inp, cmd)| match cmd {
                 Command::Uppercase => inp.to_uppercase(),
                 Command::Trim => inp.trim().to_string(),
                 &Command::Append(num_times) => {
                     let mut new_s = inp.to_string();
-                    (0..num_times).for_each(|_| {
-                        new_s.push_str("bar")
-                    });
+                    (0..num_times).for_each(|_| new_s.push_str("bar"));
                     new_s
                 }
-            }
-        }).collect()
+            })
+            .collect()
     }
 }
 
