@@ -9,7 +9,7 @@ mod my_module {
     use std::borrow::Cow;
     use super::Command;
 
-    pub fn transformer<'a>(input: &'a [(&'a str, Command)]) -> Vec<Cow<'a, str>> {
+    pub fn transformer<'a>(input: Vec<(&'a str, Command)>) -> Vec<Cow<'a, str>> {
         input
             .iter()
             .map(|(inp, cmd)| match cmd {
@@ -33,13 +33,12 @@ mod tests {
 
     #[test]
     fn it_works() {
-        let input = vec![
+        let output = transformer(vec![
             ("hello".into(), Command::Uppercase),
             (" all roads lead to rome! ".into(), Command::Trim),
             ("foo".into(), Command::Append(1)),
             ("bar".into(), Command::Append(5)),
-        ];
-        let output = transformer(&input);
+        ]);
         assert_eq!(output[0], "HELLO");
         assert_eq!(output[1], "all roads lead to rome!");
         assert_eq!(output[2], "foobar");
